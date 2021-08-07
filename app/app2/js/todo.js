@@ -5,7 +5,7 @@ const toDoList = document.getElementById("todo-list");
 const toDoInput = document.querySelector("#todo-form input");
 //=== const toDoInput = toDoForm.querySelector("input");
 const toDos = [];
-
+const TODoS_KEY = "toDos";
 
 //toDos array의 내용을 localStorage에 저장
 //localStorage에 배열은 저장할 수 없고, 오직 텍스트만 저장이 가능하기 때문에
@@ -16,8 +16,9 @@ const toDos = [];
 //이 기능을 사용하면 배열의 형식까지 그대로 string으로 변환하여 localStorage에 저장할 수 있음
 //(ex) const member = {name:"hyojin"}
 //JSON.stringify(member)  ==> "{\"name\":\"hyojin\"}"
+//string으로 변환된 array를 다시 javascript가 이해할 수 있는 살아있는 array로 바꿀때는 --> JSON.parse(member) 사용
 function savaTodos(){
-    localStorage.setItem("toDos", JSON.stringify(toDos));
+    localStorage.setItem(TODoS_KEY, JSON.stringify(toDos));
 
 
 }
@@ -63,4 +64,24 @@ function handleTodoSubmit(event){
 
 toDoForm.addEventListener("submit", handleTodoSubmit)
 
+//javascript에서는 array에 있는 각각의 item에 대해 
+//화면에 뿌리거나 텍스트를 변형하는 등의 function을 실행할 수 있음
+//배열데이터.forEach() --> array에 있는 각각의 item에 대해 ()안에 기술한 function을 실행함
+//배열데이터.forEach(Element => { });   --> 이런 형태로도 가능
+
+
+
+const savedToDos = localStorage.getItem(TODoS_KEY);
+
+if(savedToDos !== null){
+    const parsedToDos = JSON.parse(savedToDos);
+    parsedToDos.forEach(sayHello);  //parsedToDos로부터 가져온 각각의 item에 대해 sayHello function 실행
+}
+
+//submit eventListener가 event(argument)를 그냥 제공해 주는 것처럼, 
+//javascript는 지금 처리되고 있는 item 또한 argument로 제공해줌. 
+function sayHello(item){     //item === 특정 item에 대해 해당 함수가 실행될 때, 그 아이템에 대한 정보가 담김 
+console.log(`sayHello ${item}`);
+
+}
 
