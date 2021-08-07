@@ -4,7 +4,7 @@ const toDoForm = document.getElementById("todo-form");
 const toDoList = document.getElementById("todo-list");
 const toDoInput = document.querySelector("#todo-form input");
 //=== const toDoInput = toDoForm.querySelector("input");
-const toDos = [];
+let toDos = [];
 const TODoS_KEY = "toDos";
 
 //toDos array의 내용을 localStorage에 저장
@@ -75,8 +75,27 @@ const savedToDos = localStorage.getItem(TODoS_KEY);
 
 if(savedToDos !== null){
     const parsedToDos = JSON.parse(savedToDos);
-    parsedToDos.forEach(sayHello);  //parsedToDos로부터 가져온 각각의 item에 대해 sayHello function 실행
+    toDos = parsedToDos;
+    parsedToDos.forEach(paintTodo); //paintTodo(newTodo) -> paintTodo 함수의 argument로 parsedToDos array로부터 가져온 각각의 item이 전달
+                                    //JSON.stringify를 사용하여 배열의 형식까지 그대로 string으로 변환하여 localStorage에 저장했기 때문에 가능
+ 
+ 
+                                    //   parsedToDos.forEach(sayHello);  //parsedToDos로부터 가져온 각각의 item에 대해 sayHello function 실행
+                                      // === sayHello(parsedToDos의 item[0])
+                                      //     sayHello(parsedToDos의 item[1])
+                                      //     sayHello(parsedToDos의 item[...])
+
+
+//  parsedToDos.forEach((item) => console.log(item)); //이처럼 arrow function을 사용하여 각 item에 대해 실행할 기능까지 한 번에 정의 가능
+                                                      //parsedToDos로부터 가져온 각각의 item을 console에 출력해라.
+                                                      // === console.log(parsedToDos의 item[0]))
+                                                      //     console.log(parsedToDos의 item[1]))  
+                                                      //     console.log(parsedToDos의 item[...]))
+
+
+                                            
 }
+
 
 //submit eventListener가 event(argument)를 그냥 제공해 주는 것처럼, 
 //javascript는 지금 처리되고 있는 item 또한 argument로 제공해줌. 
