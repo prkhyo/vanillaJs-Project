@@ -30,6 +30,15 @@ const li = event.target.parentElement;  //클릭 된 <button>의 부모 태그�
 li.remove(); //특정 element 제거
 //=== toDoList.removeChild(li); 
 
+//사용할 삭제 방법 --> 기존의 array에서 삭제할 data를 제외시키고 새 array 생성
+//arraydata.filter(array의 각 요소에 대해 실행할 함수)
+//함수(arraydata[0]) --> 결과 true를 return할 경우, arraydata[0]값이 유지되어 다시 반환 --> array에 포함됨
+//함수(arraydata[1]) --> 결과 false를 return할 경우, arraydata[1]값이 삭제되어 반환되지 않음--> array에서 제외
+
+toDos = toDos.filter((todo) => todo.id !== parseInt(li.id)); 
+//todo의id는 number, li의 id는 string이기 때문에 제대로 비교하기 위해서는
+//li.id를 숫자형태로 형변환시켜줘야 함
+savaTodos();
 
 }
 
@@ -37,8 +46,9 @@ li.remove(); //특정 element 제거
 //toDo 추가 및 출력
 function paintTodo(newTodo){
 const li = document.createElement("li");
+li.id = newTodo.id;
 const span = document.createElement("span");
-span.innerText = newTodo;
+span.innerText = newTodo.text;
 const button =  document.createElement("button");
 button.innerText ="❌";
 button.addEventListener("click", deleteTodo);
@@ -56,8 +66,13 @@ function handleTodoSubmit(event){
  toDoInput.value ="";
  //toDoInput.value의 값이 비워진다고 해도 newTodo의 값은 비워지지 않음
  //toDoInput.value를 비우기 전, 새로운 변수 newTodo에 그 값을 복사해 놓은 것이기 때문에
- toDos.push(newTodo); //array에 todo 추가
- paintTodo(newTodo);
+
+ const newTodoObj = {
+   text:newTodo,
+   id: Date.now()
+ }
+ toDos.push(newTodoObj); //array에 todo 추가
+ paintTodo(newTodoObj);
  savaTodos();
 
 }
@@ -103,4 +118,31 @@ function sayHello(item){     //item === 특정 item에 대해 해당 함수가 �
 console.log(`sayHello ${item}`);
 
 }
+
+
+
+//filter 함수
+
+function niceFilter(item){
+    if(item ===1){
+        return true
+    }else{
+        return false
+    }
+
+    //return item === 1  --> 한 줄로도 가능
+    
+}
+
+
+
+//{1,2,3,4}.filter(niceFilter)
+//niceFilter(1) 
+//niceFilter(2)
+//niceFilter(3)
+//niceFilter(4)
+// ==> 총 4번 실행
+// --> 결과 값이 ture면, argument 값이 유지되어 그 값이 다시 반환
+// --> 결과 값이 false면, argument 값이 삭제되고 삭제된 값은 반환되지 않음
+
 

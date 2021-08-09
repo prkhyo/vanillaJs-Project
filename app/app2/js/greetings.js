@@ -2,6 +2,8 @@ const USERNAME_KEY = "username";
 const loginForm = document.querySelector("#login-form");
 const h1 = document.querySelector("#greeting");
 const HIDDEN_CLASSNAME = 'hidden';
+const loginInput = document.querySelector("#login-form input");
+const loginButton = document.querySelector("#login-form button");
 
 function onLoginSubmit5(event){  
 
